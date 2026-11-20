@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AskSE - SE Help Desk</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%236366f1'/%3E%3Crect x='14' y='14' width='36' height='28' rx='9' fill='%23fff'/%3E%3Cpath d='M24 42 22 52 33 42z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="lgA" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/>
+      </linearGradient>
+    </defs>
+    <symbol id="logo" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="16" fill="url(#lgA)"/>
+      <rect x="14" y="13" width="36" height="28" rx="9" fill="#fff"/>
+      <path d="M24 41 21 52 34 41z" fill="#fff"/>
+      <text x="32" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="20" fill="#6366f1">?</text>
+    </symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="logo" aria-hidden="true"><use href="#logo"/></svg>
+      <div><h1>AskSE</h1><span>SE Department Help Desk</span></div>
+    </div>
+    <nav id="tabs" aria-label="Sections">
+      <button data-tab="chat" class="active">Chat</button>
+      <button data-tab="faqs">FAQs</button>
+      <button data-tab="admin">Admin</button>
+      <button data-tab="stats">Stats</button>
+      <button data-tab="about">About</button>
+    </nav>
+    <button id="themeBtn" class="icon" title="Toggle dark mode" aria-label="Toggle dark mode">&#9680;</button>
+  </header>
+
+  <main>
+    <!-- CHAT -->
+    <section id="tab-chat" class="tab active">
+      <div class="notice">Answers are AI-generated from the department FAQ. Verify important information with the office.</div>
+      <div class="chat-tools">
+        <label class="switch"><input type="checkbox" id="urduToggle"> <span>Reply in Urdu script</span></label>
+        <button id="clearBtn" class="ghost" type="button">Clear chat</button>
+      </div>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <div id="chips" class="chips"></div>
+      <form id="composer" class="composer" autocomplete="off">
+        <div class="field">
+          <textarea id="input" rows="1" placeholder="Ask about labs, exams, fees, transport..." aria-label="Your question"></textarea>
+          <div class="meta"><span id="inputError" class="err"></span><span id="counter">0/300</span></div>
+        </div>
+        <button type="button" id="micBtn" class="icon" title="Voice input" aria-label="Voice input">&#127908;</button>
+        <button type="submit" id="sendBtn" class="primary">Send</button>
+      </form>
+    </section>
+
+    <!-- FAQS -->
+    <section id="tab-faqs" class="tab">
+      <div class="section-head">
+        <div><h2>Department FAQs</h2><p class="muted" id="faqCount"></p></div>
+        <button id="resetBtn" class="ghost" type="button">Reset to starter data</button>
+      </div>
+      <div id="faqList" class="faq-list"></div>
+    </section>
+
+    <!-- ADMIN -->
+    <section id="tab-admin" class="tab">
+      <div class="section-head"><div><h2>Admin</h2><p class="muted">Add new FAQs. They are used by the chatbot immediately.</p></div></div>
+      <form id="pinForm" class="card" autocomplete="off">
+        <label for="pinInput">Admin PIN</label>
+        <div class="row">
+          <input id="pinInput" type="password" inputmode="numeric" placeholder="Enter PIN">
+          <button class="primary" type="submit">Unlock</button>
+        </div>
+        <span id="pinError" class="err"></span>
+      </form>
+      <form id="faqForm" class="card" hidden autocomplete="off">
+        <label for="fCategory">Category</label>
+        <select id="fCategory"></select>
+        <span class="err" id="eCategory"></span>
+
+        <label for="fQuestion">Question <small class="muted">(10-150 characters)</small></label>
+        <textarea id="fQuestion" rows="2"></textarea>
+        <span class="err" id="eQuestion"></span>
+
+        <label for="fAnswer">Answer <small class="muted">(10-400 characters)</small></label>
+        <textarea id="fAnswer" rows="4"></textarea>
+        <span class="err" id="eAnswer"></span>
+
+        <div class="row end">
+          <span class="ok" id="faqOk"></span>
+          <button class="primary" type="submit">Add FAQ</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- STATS -->
+    <section id="tab-stats" class="tab">
+      <div class="section-head"><div><h2>Stats</h2><p class="muted">How the help desk is being used.</p></div></div>
+      <div id="statsBody"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="tab-about" class="tab">
+      <div class="about card">
+        <svg class="logo big" aria-hidden="true"><use href="#logo"/></svg>
+        <h2>AskSE</h2>
+        <p class="muted">A help-desk chatbot that answers only from the department FAQ and cites the FAQ it used.</p>
+        <dl id="aboutList"></dl>
+      </div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
